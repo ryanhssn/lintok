@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "952999762403",
+    "firebase_url": "https://lintok-29090.firebaseio.com",
+    "project_id": "lintok-29090",
+    "storage_bucket": "lintok-29090.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952999762403:android:cefc5541f1b14101",
+        "android_client_info": {
+          "package_name": "com.lintok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952999762403-ua2caei9p7bvq32e6vphac1an46rvmf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdcHgazS5OYth__WiMnjnBj8_8u_9t3to"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
