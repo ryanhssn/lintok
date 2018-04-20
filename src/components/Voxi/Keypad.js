@@ -5,14 +5,15 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  ViewPropTypes
 } from 'react-native';
 
 class KeypadButton extends React.Component {
 
   static propTypes = {
     ...TouchableOpacity.propTypes,
-    style: View.propTypes.style,
+    style: ViewPropTypes.style,
   };
 
   render() {
@@ -34,7 +35,7 @@ class KeypadButton extends React.Component {
     return (<TouchableOpacity {...touchableProps}>
               <View style={[this.props.style, {flexDirection: 'column'}]}>
                  <Text style={[styles.digits, {alignSelf:'center'}]}>{this.props.txt1}</Text>
-                  {letters}                
+                  {letters}
               </View>
             </TouchableOpacity>);
     }
@@ -80,7 +81,7 @@ var styles = StyleSheet.create({
   },
 	keypadrow: {
 		flexDirection: 'row',
-		alignSelf: 'center'    
+		alignSelf: 'center'
 	},
 	keypadbutton: {
 		margin: 10,
@@ -89,7 +90,7 @@ var styles = StyleSheet.create({
 		borderWidth: 0.5,
 		borderColor: '#2B2B2B',
 		borderRadius: 35,
-    paddingTop: 7    
+    paddingTop: 7
 	},
   digits: {
     fontFamily: 'Helvetica Neue',

@@ -56,6 +56,8 @@
 		1319BF2057C04C28B7F779EE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3A8A6421C94329B7F34446 /* GLKit.framework */; };
 		4C744D842DD94C95B03CDECE /* libVoxImplantSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FA88D1BB9A420D9631B221 /* libVoxImplantSDK.a */; };
 		AAC80B91CC3342108E24B3C9 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB054EFDAAE549199018206F /* libRNCamera.a */; };
+		E35EAF3556D145288C450237 /* libBDVSimpleContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAC64B223C9479D9BF378EA /* libBDVSimpleContacts.a */; };
+		704FDEF2DE3548CAA5F06196 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47907E2FC8E14AEEA6B483EE /* libRCTContacts.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -303,6 +305,10 @@
 		58FA88D1BB9A420D9631B221 /* libVoxImplantSDK.a */ = {isa = PBXFileReference; name = "libVoxImplantSDK.a"; path = "/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib/libVoxImplantSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		1F017B8A132F49F9870B2344 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; name = "RNCamera.xcodeproj"; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		CB054EFDAAE549199018206F /* libRNCamera.a */ = {isa = PBXFileReference; name = "libRNCamera.a"; path = "libRNCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0BCEC5A2B4F444BCB255F842 /* BDVSimpleContacts.xcodeproj */ = {isa = PBXFileReference; name = "BDVSimpleContacts.xcodeproj"; path = "../node_modules/react-native-simple-contacts/ios/BDVSimpleContacts.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		EBAC64B223C9479D9BF378EA /* libBDVSimpleContacts.a */ = {isa = PBXFileReference; name = "libBDVSimpleContacts.a"; path = "libBDVSimpleContacts.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6A74C76F48C844E5A16D63F3 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; name = "RCTContacts.xcodeproj"; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		47907E2FC8E14AEEA6B483EE /* libRCTContacts.a */ = {isa = PBXFileReference; name = "libRCTContacts.a"; path = "libRCTContacts.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +346,8 @@
 				1319BF2057C04C28B7F779EE /* GLKit.framework in Frameworks */,
 				4C744D842DD94C95B03CDECE /* libVoxImplantSDK.a in Frameworks */,
 				AAC80B91CC3342108E24B3C9 /* libRNCamera.a in Frameworks */,
+				E35EAF3556D145288C450237 /* libBDVSimpleContacts.a in Frameworks */,
+				704FDEF2DE3548CAA5F06196 /* libRCTContacts.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +521,8 @@
 				6F7AB88F521B45E0B68C6CA5 /* RNFirebaseCrashReport.xcodeproj */,
 				E2B3BD906556425BB1328B89 /* RNBackgroundJob.xcodeproj */,
 				1F017B8A132F49F9870B2344 /* RNCamera.xcodeproj */,
+				0BCEC5A2B4F444BCB255F842 /* BDVSimpleContacts.xcodeproj */,
+				6A74C76F48C844E5A16D63F3 /* RCTContacts.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1082,6 +1092,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1092,6 +1104,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 			};
 			name = Debug;
@@ -1113,6 +1127,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1123,6 +1139,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 			};
 			name = Release;
@@ -1151,10 +1169,14 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1182,10 +1204,14 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;
@@ -1216,6 +1242,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1226,6 +1254,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 			};
 			name = Debug;
@@ -1256,6 +1286,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1266,6 +1298,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 					"$(SRCROOT)/../node_modules/react-native-background-job/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-contacts/ios",
+					"$(SRCROOT)/../node_modules/react-native-contacts/ios/RCTContacts",
 				);
 			};
 			name = Release;
@@ -1291,6 +1325,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1316,6 +1352,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/home/br/Desktop/work/lintok-final/node_modules/react-native-voximplant/ios/VoxImplantSDK/lib\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;

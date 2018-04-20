@@ -22,11 +22,10 @@ export default class Camera extends Component{
   };
 
    componentDidMount(){
-               AsyncStorage.getItem('@MyPhone:key').then((value)=>{
-                 var num = JSON.parse(value)
-                 this.setState({phone:num});
-
-          })
+     AsyncStorage.getItem('@MyPhone:key').then((value)=>{
+     var num = JSON.parse(value)
+     this.setState({phone:num});
+   })
 
 
    }
@@ -99,9 +98,7 @@ export default class Camera extends Component{
             visible:false
         });
 
-      navigate.push({
-    			id:'ChatDetail',
-    		})
+      this.props.navigation.navigate('chatMain')
     }
 
     onCameraPress(){

@@ -7,10 +7,10 @@ export default class Confirmation extends Component{
 			_navigator = this.props.navigator
 			this.state = {
 				myKey:'',
-                otp:'',
-                otpMatch:'',
+        otp:'',
+        otpMatch:'',
 			}
-		} 
+		}
 
     componentDidMount() {
           AsyncStorage.getItem('@MySuperStore:key').then((value)=>{
@@ -23,9 +23,7 @@ export default class Confirmation extends Component{
                 ToastAndroid.showWithGravity('Please Enter OTP', ToastAndroid.SHORT, ToastAndroid.CENTER);
             }
             else if(this.state.otpMatch == this.state.otp){
-                  this.props.navigator.replace({
-						 id:'Camera'
-					})
+                this.props.navigation.navigate('Camera')
               }
               else{
                     ToastAndroid.showWithGravity('Please Enter Valid OTP', ToastAndroid.SHORT, ToastAndroid.CENTER);
@@ -39,7 +37,7 @@ export default class Confirmation extends Component{
                  <View style={styles.logoContainer}>
                      <Text style={styles.title}>One Time Password Verification</Text>
                      <Text style={styles.largeText}>
-                            Your One Time Password will be sent to 
+                            Your One Time Password will be sent to
                     </Text>
                     <Text style={styles.littleText}>
                             your mobile number
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
           padding:5
      },
      littleText:{
-         padding:0 
+         padding:0
      },
      verfication:{
         flex:1,

@@ -16,6 +16,9 @@ import {
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import Splash from './src/components/Splash/Splash';
+import Chat from './src/components/screens/Chat';
+import MiddlePage from './src/components/screens/MiddlePage';
+import ContactScreen from './src/components/screens/ContactScreen';
 
          var Login = require('./src/components/Login/Login');
   var Confirmation = require('./src/components/Confirmation/Confirmation');
@@ -36,10 +39,10 @@ import Splash from './src/components/Splash/Splash';
    var UserProfile = require('./src/components/Userlist/UserProfile');
       var NewGroup = require('./src/components/NewGroup/NewGroup');
     var AddSubject = require('./src/components/NewGroup/AddSubject');
-          var Chat = require('./src/components/screens/Chat');
+          //var Chat = require('./src/components/screens/Chat');
      var Following = require('./src/components/screens/Following');
            var You = require('./src/components/screens/You');
-    var MiddlePage = require('./src/components/screens/MiddlePage');
+    //var MiddlePage = require('./src/components/screens/MiddlePage');
     var LiveScreen = require('./src/components/LiveScreen/LiveScreen');
          var Share = require('./src/components/LiveScreen/Share');
 var AdvanceSetting = require('./src/components/LiveScreen/AdvanceSetting');
@@ -57,6 +60,8 @@ export default class lintok extends Component {
         screen: TabNavigator({
           Login: { screen: Login},
           Confirmation: { screen: Confirmation},
+          Camera: { screen: Camera},
+          ChatDetail: { screen: ChatDetail},
         }, {
           tabBarPosition: 'bottom',
           swipeEnabled: true,
@@ -72,6 +77,13 @@ export default class lintok extends Component {
               margin: 0
               }
             }
+        })
+      },
+      chatMain: {
+        screen: TabNavigator({
+          Chat: { screen: Chat},
+          MiddlePage: { screen: MiddlePage},
+          ContactScreen: { screen: ContactScreen},
         })
       }
     }, {

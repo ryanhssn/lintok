@@ -22,21 +22,21 @@ export default class Login extends Component {
 			    initialPosition: 'unknown',
                 lastPosition: 'unknown',
 			}
-		} 
+		}
 
   async storeOtp(val){
       try {
  			 await AsyncStorage.setItem('@MySuperStore:key',JSON.stringify(val));
 		} catch (error) {
 			// Error saving data
-		}		 
+		}
 	}
-	
+
 	async storePhone(val){
 		  try{
 				  	await AsyncStorage.setItem('@MyPhone:key',JSON.stringify(val));
 			}catch(error){
-				 
+
 			}
 	}
 
@@ -73,8 +73,8 @@ export default class Login extends Component {
 	  _getOptionList() {
         return this.refs['OPTIONLIST'];
        }
- 
-  
+
+
   _canada(province) {
 	this.setState({
 		...this.state,
@@ -84,7 +84,7 @@ export default class Login extends Component {
 
 
 	 async onButtonPress(){
-     
+
 			this.setState({myVar:''});
 			this.storePhone(this.state.phone);
 					try{
@@ -110,15 +110,13 @@ export default class Login extends Component {
 									this.setState({myVar:data[prop].otp});
 									this.storeOtp(this.state.myVar);
 												 ToastAndroid.showWithGravity(data[prop].message, ToastAndroid.SHORT, ToastAndroid.CENTER);
-													this.props.navigator.replace({
-															id:'Confirmation',
-													})
+													this.props.navigation.navigate('Confirmation')
 								}
 								else{
 									  let errors = res;
 									  throw errors;
 								}
-								
+
 								}
 							 }
 

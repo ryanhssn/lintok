@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet,ScrollView,Image,TextInput,TouchableOpacity,Text,Picker} from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import { List, ListItem } from 'react-native-elements';
+import simpleContacts from 'react-native-simple-contacts';
+var Contacts = require('react-native-contacts');
 import { users } from '../config/data';
 import Chat from '../screens/Chat';
 import MiddlePage from '../screens/MiddlePage';
@@ -9,32 +11,7 @@ import {FBApp}  from '../FirebaseAuth/FirebaseAuth';
 
 var ref="";
 var names = [];
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  page: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-// 
-// var Contacts = require('react-native-contacts');
-// var PhoneContact = '';
-//   Contacts.getAll((err, contacts) => {
-//           if(err === 'denied'){
-//             // x.x
-//           } else {
-//              //PhoneContact = contacts.sort(function(a,b) {return (a.givenName > b.givenName) ? 1 : ((b.givenName > a.givenName) ? -1 : 0);} );
-//              PhoneContact =  contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
-//              console.log(PhoneContact);
-//           }
-//    })
-
+var PhoneContact = '';
 
 export default class ChatDetail extends Component {
      constructor(props){
@@ -52,6 +29,39 @@ export default class ChatDetail extends Component {
         ],
       };
 
+
+      _getContacts = async () => {
+        try {
+          alert('ryanhssn')
+          //let contacts = await simpleContacts.getContacts();
+          //alert(contacts)
+                // if(contacts){
+                //   //PhoneContact = contacts.sort(function(a,b) {return (a.givenName > b.givenName) ? 1 : ((b.givenName > a.givenName) ? -1 : 0);} );
+                //   let PhoneContact =  await contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
+                //   console.log(PhoneContact);
+                //   alert(PhoneContact);
+                //  }
+
+            let contacts = await Contacts.getAll((err, contacts) => {
+                    if(err === 'denied'){
+                      // x.x
+                    } else {
+                       //PhoneContact = contacts.sort(function(a,b) {return (a.givenName > b.givenName) ? 1 : ((b.givenName > a.givenName) ? -1 : 0);} );
+                       PhoneContact =  contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
+                       console.log(PhoneContact);
+                       //alert(PhoneContact)
+                    }
+                 })
+
+        } catch(err) {
+          alert(err)
+        }
+      }
+
+
+      componentDidMount() {
+        this._getContacts();
+      }
 
 
   _handleChangeTab = (index) => {
@@ -138,13 +148,9 @@ export default class ChatDetail extends Component {
 
   render() {
     return (
-      <TabViewAnimated
-        style={styles.container}
-        navigationState={this.state}
-        renderScene={this._renderScene}
-        renderFooter={this._renderFooter}
-        onRequestChangeTab={this._handleChangeTab}
-      />
+      <Text>
+        RENDER CONTACTS
+      </Text>
     );
   }
 }
@@ -181,6 +187,14 @@ const design = StyleSheet.create({
          flexDirection: 'row',
        backgroundColor:'#E7E8EA',
                 height:100,
+  },
+  container: {
+    flex: 1,
+  },
+  page: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 
