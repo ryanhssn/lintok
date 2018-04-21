@@ -5,19 +5,55 @@ import { List, ListItem } from 'react-native-elements';
 import { users } from '../config/data';
 import {FBApp}  from '../FirebaseAuth/FirebaseAuth';
 import PhoneContactMap from './PhoneContact';
-
 var Contacts = require('react-native-contacts');
 
-var PhoneContact = [];
-
-
 class ContactScreen extends React.Component {
+  static navigationOptions = {
+      title: 'Contact',
+    };
   constructor(props) {
     super(props);
   }
-  
+
+
+    state = {
+      contactsArray: []
+    }
+
+    componentDidMount() {
+      this._getContacts();
+    }
+
+    _getContacts = async () => {
+      try {
+          let contacts = await Contacts.getAll((err, contacts) => {
+            if(err === 'denied'){
+              // x.x
+            } else {
+              contacts =  contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
+              this.setState({
+                contactsArray: contacts
+              })
+
+            }
+         })
+
+      } catch(err) {
+        alert(err)
+      }
+    }
+
+    onPressContact =(user) =>{
+      this.props.navigation.navigate('UserDetail', {
+        itemId: 'UserDetail',
+        data: user
+      });
+
+   }
+
 
   render() {
+    const { contactsArray } = this.state;
       return (
               <View style={design.PinContainer}>
                   <View style={design.PinHeader}>
@@ -40,9 +76,20 @@ class ContactScreen extends React.Component {
 
                   </View>
                   <View>
-                    <Text>Bilal ahussain</Text>
-                    <PhoneContactMap />
-
+                  {
+                     contactsArray.map((user, index) => {
+                       //alert(JSON.stringify(user));
+                       return (
+                        <List>
+                            <ListItem button onPress={() => {this.onPressContact(user)}}
+                              key={user.givenName}
+                              title={`${user.givenName.toUpperCase()}`}
+                              subtitle="Check All Contact"
+                            />
+                        </List>
+                      )
+                      })
+                  }
                   </View>
         </View>
 

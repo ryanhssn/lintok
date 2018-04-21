@@ -12,13 +12,15 @@ import {
   View,
   Navigator
 } from 'react-native';
-
+console.ignoredYellowBox = ['Warning:'];
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import Splash from './src/components/Splash/Splash';
 import Chat from './src/components/screens/Chat';
 import MiddlePage from './src/components/screens/MiddlePage';
 import ContactScreen from './src/components/screens/ContactScreen';
+import UserDetail from './src/components/Userlist/UserDetail';
+import Call from './src/components/Call/Call';
 
          var Login = require('./src/components/Login/Login');
   var Confirmation = require('./src/components/Confirmation/Confirmation');
@@ -31,9 +33,9 @@ import ContactScreen from './src/components/screens/ContactScreen';
        var CallLog = require('./src/components/CallLog/CallLog');
        var Setting = require('./src/components/Setting/Setting');
        var Account = require('./src/components/Account/Account');
-    var UserDetail = require('./src/components/Userlist/UserDetail');
+    //var UserDetail = require('./src/components/Userlist/UserDetail');
         var Attach = require('./src/components/Attach/Attach');
-          var Call = require('./src/components/Call/Call');
+          //var Call = require('./src/components/Call/Call');
          var Call2 = require('./src/components/Call/Call2');
     var ChatDetail = require('./src/components/Userlist/ChatDetail');
    var UserProfile = require('./src/components/Userlist/UserProfile');
@@ -74,7 +76,8 @@ export default class lintok extends Component {
             style: {
               backgroundColor: 'rgba(218, 45, 249, 0.8)',
               padding: 0,
-              margin: 0
+              margin: 0,
+              display: 'none'
               }
             }
         })
@@ -84,6 +87,46 @@ export default class lintok extends Component {
           Chat: { screen: Chat},
           MiddlePage: { screen: MiddlePage},
           ContactScreen: { screen: ContactScreen},
+        }, {
+          tabBarPosition: 'bottom',
+          swipeEnabled: true,
+          tabBarOptions: {
+            labelStyle: {
+              fontSize: 15,
+              paddingVertical: 5,
+              margin: 0,
+              upperCaseLabel: false
+            },
+            style: {
+              backgroundColor: '#FD680C',
+              padding: 0,
+              margin: 0,
+            },
+            indicatorStyle:
+                  { backgroundColor: 'transparent', }
+            }
+        })
+      },
+      chatHidden: {
+        screen: TabNavigator({
+          UserDetail: { screen: UserDetail},
+          Call: { screen: Call},
+        }, {
+          tabBarPosition: 'bottom',
+          swipeEnabled: false,
+          tabBarOptions: {
+            labelStyle: {
+              fontSize: 9,
+              paddingVertical: 5,
+              margin: 0
+            },
+            style: {
+              backgroundColor: 'rgba(218, 45, 249, 0.8)',
+              padding: 0,
+              margin: 0,
+              display: 'none'
+              }
+            }
         })
       }
     }, {

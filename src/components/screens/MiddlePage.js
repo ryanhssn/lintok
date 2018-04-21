@@ -1,25 +1,76 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet,ScrollView,Image,TextInput,TouchableOpacity,Text,Picker,ToolbarAndroid,AsyncStorage} from 'react-native';
+import { View, StyleSheet,ScrollView,Image,TextInput,TouchableOpacity,Text, Button, Picker,ToolbarAndroid,AsyncStorage, Dimensions} from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import Video from 'react-native-video';
 import { List, ListItem } from 'react-native-elements';
 import { users } from '../config/data';
 import {FBApp}  from '../FirebaseAuth/FirebaseAuth';
 import VideoPlayer from 'react-native-video-controls';
+import Platform from './Platform';
+
 var ref="";
 var names = [];
+
+const { width, height } = Dimensions.get('screen');
+//alert(width+" "+height)
+
+
 class MiddlePage extends Component {
+  static navigationOptions = {
+      title: 'Public',
+    };
   constructor(props) {
     super(props);
     this.state = {
         pageData:'',
         Id:'',
         showView:true,
+        paused: false,
+       orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
+       devicetype: Platform.isTablet() ? 'tablet' : 'phone',
+       width,
+       height: height/3
     }
+
+    // Event Listener for orientation changes
+   Dimensions.addEventListener('change', () => {
+       this.setState({
+           orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
+       });
+   });
+
   }
 
+  _setOrientation = (data) => {
+  //alert(data.orientation)
+  if(data.orientation == 'LANDSCAPE'){
+    this.setState({
+        width: height,
+        height: width
+    });
+
+  } else {
+    this.setState({
+        width,
+        height: height/3
+    });
+  }
+  // this.setState({
+  //   orientation: evt.orientation,
+  //   device: evt.device
+  // });
+}
+
   componentDidMount(){
-          AsyncStorage.getItem('@UserId:key').then((value)=>{
+      // Orientation.addListener(this._setOrientation);
+      //
+      // Orientation.getOrientation(
+      //  (orientation, device) => {
+      //    console.log(orientation, device);
+      //  }
+      // );
+      AsyncStorage.getItem('@UserId:key').then((value)=>{
                  var userId = JSON.parse(value);
                  this.setState({Id:userId});
                      this.onBPress();
@@ -252,6 +303,7 @@ class MiddlePage extends Component {
     }
 
   render() {
+     const { width, height } = this.state;
     return (
       <View style={design.PinContainer}>
                   <View style={design.PinHeader}>
@@ -288,8 +340,143 @@ class MiddlePage extends Component {
                              </View>
                         </View>
                         <ScrollView>
-                             {names}
-                       </ScrollView>
+
+                        <View style={design.singleFeed}>
+
+                        <View style={design.feedHead}>
+                          <Image
+                           style={design.feedDp}
+                            source={require('../../images/user1.png')}
+                           />
+                           <Text style={design.FeedUserName}>Marry Williams</Text>
+                           <Text style={design.feedAgo}>1 hour ago</Text>
+                        </View>
+                      <TouchableOpacity onPress={() =>
+                          {
+                            this.setState({
+                              paused: !this.state.paused
+                            })
+                          }
+                       }>
+                        <Video source={{uri: "http://184.72.239.149/vod/smil:BigBuckBunny.smil/playlist.m3u8"}}   // Can be a URL or a local file.
+                        ref={(ref) => {
+                        this.player = ref
+                        }}                                                 // Store reference
+                        rate={1.0}                              // 0 is paused, 1 is normal.
+                        volume={1.0}                            // 0 is muted, 1 is normal.
+                        muted={false}                           // Mutes the audio entirely.
+                        paused={this.state.paused}                          // Pauses playback entirely.
+                        resizeMode="stretch"                      // Fill the whole screen at aspect ratio.*
+                        repeat={true}                           // Repeat forever.
+                        playInBackground={false}                // Audio continues to play when app entering background.
+                        playWhenInactive={false}                // [iOS] Video continues to play when control or notification center are shown.
+                        ignoreSilentSwitch={"ignore"}           // [iOS] ignore | obey - When 'ignore', audio will still play with the iOS hard silent switch set to silent. When 'obey', audio will toggle with the switch. When not specified, will inherit audio settings as usual.
+                        progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
+                        onLoadStart={this.loadStart}            // Callback when video starts to load
+                        onLoad={this.setDuration}               // Callback when video loads
+                        onProgress={this.setTime}               // Callback every ~250ms with currentTime
+                        onEnd={this.onEnd}                      // Callback when playback finishes
+                        onError={this.videoError}               // Callback when video cannot be loaded
+                        onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                        onTimedMetadata={this.onTimedMetadata}  // Callback when the stream receive some metadata
+                        fullscreen={true}
+                        style={[design.backgroundVideo, {width, height}]} />
+                      </TouchableOpacity>
+
+
+                        <View style={design.feedFoot}>
+                          <View style={{flexDirection: 'row', alignItems: 'center' }}>
+                              <Image
+                               style={design.likeBtn}
+                                source={require('../../images/like.png')}
+                               />
+                               <Text> 20  Likes</Text>
+                           </View>
+                            <View style={{flexDirection: 'row', alignItems: 'center' }}>
+                                <Image
+                               style={design.CmntBtn}
+                                source={require('../../images/comment.png')}
+                               />
+                               <Text> 15  Comments</Text>
+                           </View>
+                            <View>
+                              <Image
+                               style={design.menuBtn}
+                                source={require('../../images/report.png')}
+                               />
+                           </View>
+                        </View>
+
+                      </View>
+
+                        <View style={design.singleFeed}>
+
+                        <View style={design.feedHead}>
+                          <Image
+                           style={design.feedDp}
+                            source={require('../../images/user1.png')}
+                           />
+                           <Text style={design.FeedUserName}>Marry Williams</Text>
+                           <Text style={design.feedAgo}>1 hour ago</Text>
+                        </View>
+                      <TouchableOpacity onPress={() =>
+                          {
+                            this.setState({
+                              paused: !this.state.paused
+                            })
+                          }
+                       }>
+                        <Video source={{uri: "http://www.streambox.fr/playlists/test_001/stream.m3u8"}}   // Can be a URL or a local file.
+                        ref={(ref) => {
+                        this.player = ref
+                        }}                                                 // Store reference
+                        rate={1.0}                              // 0 is paused, 1 is normal.
+                        volume={1.0}                            // 0 is muted, 1 is normal.
+                        muted={false}                           // Mutes the audio entirely.
+                        paused={this.state.paused}                          // Pauses playback entirely.
+                        resizeMode="stretch"                      // Fill the whole screen at aspect ratio.*
+                        repeat={true}                           // Repeat forever.
+                        playInBackground={false}                // Audio continues to play when app entering background.
+                        playWhenInactive={false}                // [iOS] Video continues to play when control or notification center are shown.
+                        ignoreSilentSwitch={"ignore"}           // [iOS] ignore | obey - When 'ignore', audio will still play with the iOS hard silent switch set to silent. When 'obey', audio will toggle with the switch. When not specified, will inherit audio settings as usual.
+                        progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
+                        onLoadStart={this.loadStart}            // Callback when video starts to load
+                        onLoad={this.setDuration}               // Callback when video loads
+                        onProgress={this.setTime}               // Callback every ~250ms with currentTime
+                        onEnd={this.onEnd}                      // Callback when playback finishes
+                        onError={this.videoError}               // Callback when video cannot be loaded
+                        onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                        onTimedMetadata={this.onTimedMetadata}  // Callback when the stream receive some metadata
+                        fullscreen={true}
+                        style={[design.backgroundVideo, {width, height}]} />
+                      </TouchableOpacity>
+
+
+                        <View style={design.feedFoot}>
+                          <View style={{flexDirection: 'row', alignItems: 'center' }}>
+                              <Image
+                               style={design.likeBtn}
+                                source={require('../../images/like.png')}
+                               />
+                               <Text> 20  Likes</Text>
+                           </View>
+                            <View style={{flexDirection: 'row', alignItems: 'center' }}>
+                                <Image
+                               style={design.CmntBtn}
+                                source={require('../../images/comment.png')}
+                               />
+                               <Text> 15  Comments</Text>
+                           </View>
+                            <View>
+                              <Image
+                               style={design.menuBtn}
+                                source={require('../../images/report.png')}
+                               />
+                           </View>
+                        </View>
+
+                      </View>
+                 </ScrollView>
             </View>
 
     );
@@ -340,4 +527,65 @@ const design = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  singleFeed: {
+   flex: 1,
+   justifyContent: 'center',
+   alignItems: 'center',
+   backgroundColor: '#F5FCFF',
+ },
+ backgroundVideo: {
+   flexDirection: 'row',
+   justifyContent: 'center',
+   alignItems: 'stretch',
+   borderColor: 'red',
+   borderWidth: 2,
+   marginTop: 20
+ },
+ feedHead: {
+   flexDirection: 'row',
+   justifyContent: 'flex-start',
+   alignItems: 'center',
+   width,
+   marginHorizontal: 15,
+   marginTop: 10,
+   height: 40
+ },
+ FeedUserName: {
+   fontWeight: 'bold',
+   fontSize: 15,
+   marginLeft: 10
+ },
+ feedDp: {
+   marginLeft: 15,
+   width: 50,
+   height: 50
+ },
+ feedAgo: {
+   marginLeft: '30%',
+ },
+ feedFoot: {
+   flex:1,
+   width,
+   flexDirection: 'row',
+   justifyContent: 'flex-start',
+   alignItems:'center',
+   margin: 10,
+   paddingBottom: 10,
+   borderBottomColor: '#3c3c3c',
+   borderBottomWidth: 1
+ },
+ likeBtn: {
+   width: 20,
+   height: 20,
+   marginLeft: 20
+ },
+ CmntBtn: {
+   width: 20,
+   height: 20,
+   marginLeft: '30%'
+ },
+ menuBtn: {
+   marginLeft: '25%'
+ }
+
 })

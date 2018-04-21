@@ -3,6 +3,7 @@ package com.lintok;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.opentokreactnative.OTPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import ca.bigdata.voice.contacts.BDVSimpleContactsPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OTPackage(),
             new ReactNativeContacts(),
             new BDVSimpleContactsPackage(),
             new RNCameraPackage(),

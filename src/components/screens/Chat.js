@@ -12,13 +12,13 @@ var numberOfChat =[];
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-     
+console.ignoredYellowBox = ['Warning:'];
       this._onPressRow = this._onPressRow.bind(this);
- 
+
           this.state = {
                    dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
                    message:""
-		     	  }  
+		     	  }
 
 
               AsyncStorage.getItem('@MyPhone:key').then((value)=>{
@@ -36,7 +36,7 @@ class Chat extends React.Component {
                         var record = {}
                         record.phone = key
                         record.message = childData.textmessgae
-                        record.groudId = childData.groupid
+                        record.groupId = childData.groupid
                         record.type = childData.type
                         numberOfChat.push(record)
                       });
@@ -48,24 +48,25 @@ class Chat extends React.Component {
 
   }
 
-    _onPressRow(rowId, rowData,phone,groupId) {
-        this.props.navigator.replace({
-                id:'UserDetail',
-                recentData:rowData,
-                pageTitle:rowId,
-                phone:phone,
-                groupId:groupId
-          })
+    _onPressRow(rowData) {
+
+        const { phone, groupId } = rowData;
+        this.props.navigation.navigate('UserDetail', {
+          recentData:rowData,
+          pageTitle:'RecentChat',
+          phone,
+          groupId
+        })
       }
 
       renderRow(rowData){
-             console.log(rowData);
+             //alert(JSON.stringify(rowData));
             return(
-                <TouchableOpacity onPress={()=>{this._onPressRow("RecentChat",rowData,rowData.phone,rowData.groudId)}}>
+                <TouchableOpacity onPress={()=>{this._onPressRow(rowData)}}>
                 <ListItem
                     key={rowData.phone}
                     roundAvatar
-                    avatar={{ uri: 'https://randomuser.me/api/portraits/thumb/men/29.jpg'}}
+                    avatar={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9jFB3IlnnlJpKehwZdSToVkFQkbK7siSdcTX8HiZHXeRTmnQS'}}
                     title={rowData.phone}
                     subtitle={rowData.message}
                  />
@@ -113,7 +114,7 @@ export default Chat;
 const design = StyleSheet.create({
   PinContainer: {
     flex: 1,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   PinHeader: {
     backgroundColor: '#FD680C',
@@ -145,6 +146,3 @@ const design = StyleSheet.create({
                 height:100,
   },
 })
-
-
-

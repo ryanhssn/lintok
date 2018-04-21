@@ -138,10 +138,12 @@ android {
 }
 
 dependencies {
+    compile project(':opentok-react-native')
     compile project(':react-native-contacts')
     compile project(':react-native-simple-contacts')
     compile project(':react-native-camera')
     compile project(':react-native-video')
+    compile 'com.opentok.android:opentok-android-sdk:2.13.0'
 
     implementation project(':react-native-incall-manager')
     implementation project(':react-native-firebase-crash-report')

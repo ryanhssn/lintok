@@ -30,38 +30,6 @@ export default class ChatDetail extends Component {
       };
 
 
-      _getContacts = async () => {
-        try {
-          alert('ryanhssn')
-          //let contacts = await simpleContacts.getContacts();
-          //alert(contacts)
-                // if(contacts){
-                //   //PhoneContact = contacts.sort(function(a,b) {return (a.givenName > b.givenName) ? 1 : ((b.givenName > a.givenName) ? -1 : 0);} );
-                //   let PhoneContact =  await contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
-                //   console.log(PhoneContact);
-                //   alert(PhoneContact);
-                //  }
-
-            let contacts = await Contacts.getAll((err, contacts) => {
-                    if(err === 'denied'){
-                      // x.x
-                    } else {
-                       //PhoneContact = contacts.sort(function(a,b) {return (a.givenName > b.givenName) ? 1 : ((b.givenName > a.givenName) ? -1 : 0);} );
-                       PhoneContact =  contacts.sort((a, b) => a.givenName.localeCompare(b.givenName));
-                       console.log(PhoneContact);
-                       //alert(PhoneContact)
-                    }
-                 })
-
-        } catch(err) {
-          alert(err)
-        }
-      }
-
-
-      componentDidMount() {
-        this._getContacts();
-      }
 
 
   _handleChangeTab = (index) => {
@@ -129,15 +97,7 @@ export default class ChatDetail extends Component {
                          </View>
                       </View>
                   </View>
-                      <List>
-                       {PhoneContact.map((user) => (
-                          <ListItem button onPress={() => {this.onPressContact("ContactDetail",user)}}
-                            key={user.givenName}
-                            title={`${user.givenName.toUpperCase()}`}
-                            subtitle="Check All Contact"
-                          />
-                       ))}
-                      </List>
+
         </View>
       </ScrollView>);
 

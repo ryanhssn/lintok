@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text,TouchableOpacity,TextInput,Image,ListView,AsyncStorage} from 'react-native';
+import {StyleSheet,View,Text,TouchableOpacity,TextInput,Image,ImageBackground,ListView,AsyncStorage} from 'react-native';
 import InCallManager from 'react-native-incall-manager';
 import {FBApp}  from '../FirebaseAuth/FirebaseAuth';
 var ref3 = FBApp.database ().ref('Contact');
 const firstUser = '';
 const secondUser = '';
 const uid  = '';
-export default class Call extends Component {  
+export default class Call extends Component {
     constructor(props){
         super(props);
         uid = this.props.groupId
@@ -29,7 +29,7 @@ export default class Call extends Component {
                 // InCallManager.start({media: 'audio', ringback: '_BUNDLE_'});
     }
      onBackButtonPress(){
-          this.props.navigator.pop();
+          this.props.navigation.goBack();
      }
 
      changePress(){
@@ -39,13 +39,13 @@ export default class Call extends Component {
      }
      render(){
          return (
-              <Image source={require('../../images/audio.png')} style={styles.container}>
+              <ImageBackground source={require('../../images/audio.png')} style={styles.container}>
               <View style={{width:'100%',height:46,flexDirection:'row'}}>
-                  <View style={{width:30,height:46,padding:10}}>
-                      <TouchableOpacity onPress={this.onBackButtonPress.bind(this)}>
+
+                      <TouchableOpacity style={{width:30,height:46,padding:10}} onPress={this.onBackButtonPress.bind(this)}>
                         <Image source={require('../../images/prev.png')}/>
                       </TouchableOpacity>
-                      </View>
+
                          <View style={{width:200,height:46,padding:5}}>
                               <Text style={{color:'black'}}>Suman Saha</Text>
                               <View>
@@ -57,11 +57,11 @@ export default class Call extends Component {
                         <Image source={require('../../images/audio_user.png')}/>
                         <View style={{width:'100%',height:100,flexDirection:'row',marginTop:80}}>
                         </View>
-                            <View style={{width:'100%',height:100,marginTop:40,alignItems:'center'}}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack() } style={{width:'100%',height:100,marginTop:40,alignItems:'center'}}>
                               <Image source={require('../../images/call_end.png')}/>
-                           </View>
+                           </TouchableOpacity>
                   </View>
-              </Image>
+              </ImageBackground>
          )
      }
 }
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
           flex: 1,
           width: null,
           height: null,
+          paddingVertical: 10,
      },
 })
 

@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text,AsyncStorage,TouchableOpacity,TextInput,Image,ListView} from 'react-native';
+import {StyleSheet,View,Text,AsyncStorage,TouchableOpacity,TextInput,Image,ListView, Dimensions, Modal} from 'react-native';
 import MyPresentationalComponent from '../config/ListDetail';
 import {FBApp}  from '../FirebaseAuth/FirebaseAuth';
 import BackgroundTask from 'react-native-background-task';
-  const firstUser = '';
- const secondUser = '';
-       const ref1 = '';
-       const ref2 = '';
-       const uid  = '';
+
+import VideoModal from './VideoModal';
+
+const { width, height } = Dimensions.get('window');
+
+const firstUser = '';
+const secondUser = '';
+const ref1 = '';
+const ref2 = '';
+const uid  = '';
 var chat_username = "";
 var chat_user_number="";
 var rootRef = '';
@@ -17,29 +22,52 @@ var tt = '';
 var kk = '';
 var ro = '';
 
-export default class UserDetail extends Component {  
+export default class UserDetail extends Component {
     	constructor(props){
 			super(props);
-            if(this.props.pageTitle == 'RecentChat'){
+       const { params } = this.props.navigation.state;
+       const recentData = params ? params.recentData : null;
+       const pageTitle = params ? params.pageTitle : null;
+       const phone = params ? params.phone : null;
+       const groupId = params ? params.groupId : null;
+
+       this.state = {
+         userNumber: ''
+       }
+
+            if(pageTitle == 'RecentChat'){
                  console.log(this.props.recentData);
+                 //alert(groupId)
+                 //alert(JSON.stringify(recentData))
+                 this.setState({
+                   userNumber : recentData.number
+                 })
                  AsyncStorage.getItem('@MyPhone:key').then((value)=>{
-                 num = JSON.parse(value)
+                 var num = JSON.parse(value)
                     firstUser = num;
-                    secondUser = this.props.phone;
+                    //alert(firstUser)
+                    secondUser = phone;
+                    //alert(secondUser)
                     ref1 = FBApp.database ().ref('Recent/'+firstUser+"/"+secondUser);
                     ref2 = FBApp.database ().ref('Recent/'+secondUser+"/"+firstUser);
                     ref3 = FBApp.database ().ref('Contact');
-                    uid = this.props.groupId
+                    uid = groupId;
                     rootRef = FBApp.database ().ref('message/'+uid);
                  this.listenForItems(rootRef);
                 });
             }
             else{
-                 var data = this.props.data;
+              const { params } = this.props.navigation.state;
+              const itemId = params ? params.itemId : null;
+              const data = params ? params.data : null;
+              //alert(JSON.stringify(data))
                  chat_user_number=data.phoneNumbers[0].number;
-                 chat_user_number=chat_user_number.replace(/[^\d]/g, ''); 
+                 this.setState({
+                   userNumber :chat_user_number
+                 })
+                 chat_user_number=chat_user_number.replace(/[^\d]/g, '');
                  secondUser=chat_user_number;
-                
+
                  AsyncStorage.getItem('@MyPhone:key').then((value)=>{
                          var num  = JSON.parse(value)
                         firstUser = num;
@@ -57,7 +85,7 @@ export default class UserDetail extends Component {
                    VideoChat : "Normal"
 		     	}
 
-                  var that = this;
+               var that = this;
                 ref3.on('value', function(snapshot) {
                   let jj = '';
                   let gg = '';
@@ -72,12 +100,25 @@ export default class UserDetail extends Component {
                         tt = JSON.stringify(JSON.stringify(childSnapshot).substring(1,JSON.stringify(childSnapshot).indexOf('@')));
                         var aa = JSON.parse(tt);
                         that.handlePress2(aa);
-                    }  
+                    }
                 });
                 });
         }
 
+        state = {
+          modalVisible: false,
+        };
+
+        setModalVisible(visible) {
+          this.setState({modalVisible: visible});
+        }
+
+        onPress= () => {
+           this.setModalVisible(true);
+        }
+
         handlePress(uu){
+
                var mk = '';
                ref3.on('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot){
@@ -88,10 +129,9 @@ export default class UserDetail extends Component {
                 })
                })
              if(uu == firstUser && mk == 'Video'){
-                this.props.navigator.push({
-                    id:'Call',
-                    groupId:uid,
-                    phone:secondUser
+                this.props.navigation.navigate('Call', {
+                  groupId:uid,
+                  phone:secondUser
                 })
              }
         }
@@ -107,10 +147,9 @@ export default class UserDetail extends Component {
                 })
                })
             if(aa == firstUser  && mk == 'Video'){
-               this.props.navigator.push({
-                  id:'Call2',
-                  groupId:uid,
-                  phone:secondUser
+               this.props.navigation.navigate('Call2', {
+                 groupId:uid,
+                 phone:secondUser
                })
             }
         }
@@ -143,7 +182,7 @@ export default class UserDetail extends Component {
             updatedAt:"sadad",
         });
 
-        rootRef.push({ 
+        rootRef.push({
               createdAt:"632632664",
                 groupid:uid,
                senderId:firstUser,
@@ -176,19 +215,19 @@ export default class UserDetail extends Component {
        this.props.navigator.push({
 		 id:'Attach'
 	   })
-    } 
+    }
 
     onBackButtonPress(){
-         this.props.navigator.pop();
+        this.props.navigation.navigate('Chat')
     }
 
     onCallPress(){
-       this.props.navigator.push({
-             id:'Call'
-        })
+      this.props.navigation.navigate('Call')
+
     }
 
     onVideoPress(){
+      //alert('ryanhssn')
           ref3.set({
             createdAt:"632632664",
             groupid:uid,
@@ -197,7 +236,7 @@ export default class UserDetail extends Component {
             reciever_phone:secondUser+'@reciever_phone',
             sender_status: '',
             reciever_status: ''
-          }); 
+          });
     }
 
    renderRow(rowData){
@@ -212,7 +251,7 @@ export default class UserDetail extends Component {
         }
 
        return(
-        <View style={{width:'100%'}}>
+        <View style={styles.msgStyle}>
             {user ? (
                 <View style={{alignItems:'flex-end',padding:10}}>
                    <Text style={{width:200,backgroundColor:'green',borderRadius:45,padding:10,color:'white'}}>{rowData.val().textmessgae}</Text>
@@ -231,47 +270,51 @@ export default class UserDetail extends Component {
          return (
               <View style={styles.container}>
                    <View style={styles.PinHeader}>
-                      <View style={{width: 35, height: 50,padding:10}}>
-                          <TouchableOpacity onPress={this.onBackButtonPress.bind(this)}>
-                            <Image source={require('../../images/prev.png')}/>
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{width: 40, height: 50,padding:3}}>
-                            <Image source={require('../../images/user.png')}/>
+                      <View style={styles.bckAndDp}>
+                            <TouchableOpacity style={{padding:10}} onPress={this.onBackButtonPress.bind(this)}>
+                              <Image source={require('../../images/prev.png')}/>
+                            </TouchableOpacity>
+
+                          <View style={{width: 40, height: 50,padding:3}}>
+                              <Image source={require('../../images/user.png')}/>
+                          </View>
                         </View>
                         <View style={{width: 80, height: 50}}>
-                        </View>
-                         <View style={{width: 200, height: 50,flexDirection:'row'}}>
-                                <View style={{width: 50, height: 50,padding:10}}>
-                                    <TouchableOpacity onPress={this.onCallPress.bind(this)}>
+                          <Text>{this.state.userNumber}</Text>
+                      </View>
+                       <View style={styles.rightMedia}>
+
+                                    <TouchableOpacity style={{padding:20}} onPress={this.onCallPress.bind(this)}>
                                        <Image source={require('../../images/call.png')}/>
-                                    </TouchableOpacity>  
-                                </View>
-                                <View style={{width: 50, height: 50,padding:10}}>
-                                    <TouchableOpacity onPress={this.onVideoPress.bind(this)}>
-                                        <Image source={require('../../images/video2.png')}/>   
                                     </TouchableOpacity>
-                                </View>
-                                <View style={{width: 60, height: 50,padding:10}}>
-                                    <TouchableOpacity onPress ={this.onAttachPress.bind(this)}>
-                                        <Image source={require('../../images/attach.png')}/> 
+
+
+                                    <TouchableOpacity style={{padding:20}} onPress={this.onPress}>
+                                        <Image source={require('../../images/video2.png')}/>
+                                        <VideoModal modalVisible={this.state.modalVisible} hideModal={() => this.setModalVisible(false)} />
                                     </TouchableOpacity>
-                                </View>
+
+
+                                    <TouchableOpacity style={{padding:20}} onPress ={this.onAttachPress.bind(this)}>
+                                        <Image source={require('../../images/attach.png')}/>
+                                    </TouchableOpacity>
+
                                 <View style={{width: 50, height: 50,padding:10}}>
-                                    <Image source={require('../../images/menu.png')}/> 
+                                    <Image source={require('../../images/menu.png')}/>
                                 </View>
                         </View>
                   </View>
-
+                  <View style={styles.chatContainer}>
                   <ListView
+
                     dataSource={this.state.dataSource}
                     enableEmptySections={true}
                     renderRow={this.renderRow.bind(this)}
                     />
-
+                  </View>
                   <View style={{width:'100%', height: 50,position:'absolute',bottom:0,flexDirection:'row'}}>
                         <View style={{width:'10%',height:50,padding:10}}>
-                            <Image source={require('../../images/mic.png')}/> 
+                            <Image source={require('../../images/mic.png')}/>
                         </View>
                         <View style={{width:'54%',height:50}}>
                             <TextInput
@@ -282,14 +325,14 @@ export default class UserDetail extends Component {
                             />
                         </View>
                            <View style={{width:'10%',height:50,backgroundColor:'#FFFFFF',padding:8}}>
-                              <Image source={require('../../images/smile.png')}/> 
+                              <Image source={require('../../images/smile.png')}/>
                            </View>
                            <View style={{width:'10%',height:50,backgroundColor:'#FFFFFF',padding:8}}>
-                              <Image source={require('../../images/camera.png')}/> 
+                              <Image source={require('../../images/camera.png')}/>
                            </View>
                            <View style={{width:'30%',height:50,backgroundColor:'#FFFFFF'}}>
                                   <TouchableOpacity onPress={this.onSendMessage.bind(this)}>
-                                    <Image source={require('../../images/send.png')}/> 
+                                    <Image source={require('../../images/send.png')}/>
                                   </TouchableOpacity>
                            </View>
                       </View>
@@ -300,12 +343,40 @@ export default class UserDetail extends Component {
 
 const styles = StyleSheet.create({
      container:{
-        flex:1,
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+
      },
   PinHeader: {
     backgroundColor: '#FD680C',
     flexDirection: 'row',
-    height:46,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    paddingVertical: 10,
+
+  },
+  bckAndDp: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  rightMedia: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginLeft: '10%',
+  },
+  msgStyle: {
+  width: '100%',
+
+  },
+  chatContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
   input:{
    	  height:40,
